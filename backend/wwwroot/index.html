@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>THBMS — Admin Login</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .login-wrap {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    .login-card { width: 100%; max-width: 400px; }
+    .brand { text-align: center; margin-bottom: 2rem; }
+    .brand h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem; color: var(--green-dark); letter-spacing: .02em;
+    }
+    .brand h1 span { color: var(--green-accent); }
+    .brand p { font-size: .82rem; color: var(--gray-mid); margin-top: .3rem; }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; color: var(--green-dark); margin-bottom: 1.5rem;
+    }
+    .form-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 1.4rem; flex-wrap: wrap; gap: .5rem;
+    }
+    .link { font-size: .84rem; color: var(--green-mid); text-decoration: none; font-weight: 500; }
+    .link:hover { text-decoration: underline; }
+    .btn-full { width: 100%; justify-content: center; }
+  </style>
+</head>
+<body>
+  <div class="hero-bg"></div>
+  <div class="login-wrap">
+    <div>
+      <div class="brand">
+        <h1>Tranquility<span>Haven</span></h1>
+        <p>Booking Management System</p>
+      </div>
+      <div class="card login-card">
+        <h2 class="card-title">Admin Login</h2>
+        <div class="alert alert-error" id="alert"></div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="admin@thbms.com" autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" autocomplete="current-password"/>
+        </div>
+        <button class="btn btn-primary btn-full" id="loginBtn" onclick="doLogin()">
+          <span class="spinner" id="spinner"></span>
+          <span id="btnText">→ Login</span>
+        </button>
+        <div class="form-footer">
+          <a class="link" href="recover.html">Forgot password?</a>
+          <span style="font-size:.78rem;color:var(--gray-mid)">Demo: admin@thbms.com / password</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- auth.js only — NO common.js on login page -->
+  <script src="js/auth.js"></script>
+</body>
+</html>

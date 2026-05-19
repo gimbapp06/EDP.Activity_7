@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>THBMS — Dashboard</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/transactions.css"/>
+  <style>
+    .dash-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem; margin-bottom: 2rem;
+    }
+    .dash-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      padding: 1.5rem; box-shadow: var(--shadow-sm);
+      border-top: 4px solid var(--green-accent);
+    }
+    .dash-card .icon { font-size: 2rem; margin-bottom: .6rem; }
+    .dash-card .label { font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--gray-mid); }
+    .dash-card .value { font-size: 2rem; font-weight: 700; color: var(--green-dark); }
+    .dash-card .desc  { font-size: .8rem; color: var(--gray-mid); margin-top: .2rem; }
+    .quick-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .quick-link {
+      display: flex; align-items: center; gap: .8rem;
+      background: var(--white); border-radius: var(--radius);
+      padding: 1rem 1.2rem; text-decoration: none; color: var(--text);
+      box-shadow: var(--shadow-sm); transition: all .2s;
+      border: 1.5px solid var(--gray-light);
+    }
+    .quick-link:hover { border-color: var(--green-accent); background: var(--green-pale); }
+    .quick-link .ql-icon { font-size: 1.5rem; }
+    .quick-link .ql-text strong { display: block; font-size: .95rem; color: var(--green-dark); }
+    .quick-link .ql-text span   { font-size: .78rem; color: var(--gray-mid); }
+    .section-label { font-family: 'Playfair Display',serif; font-size: 1.1rem; color: var(--green-dark); margin-bottom: 1rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <nav class="topbar">
+    <div class="topbar-brand">Tranquility<span>Haven</span></div>
+    <div class="topbar-nav">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="pages/appointments.html">Appointments</a>
+      <a href="pages/assignments.html">Assignments</a>
+      <a href="pages/payments.html">Payments</a>
+      <a href="pages/reports.html">Reports</a>
+      <a href="usermgmt.html">Users</a>
+    </div>
+    <div class="topbar-user">
+      <span>Welcome, <strong id="topbarName">—</strong></span>
+      <button class="btn btn-outline btn-sm logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+    <div class="section-header">
+      <div>
+        <h1>Admin Dashboard</h1>
+        <p class="section-desc">Welcome to TranquilityHaven Booking Management System.</p>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="dash-grid">
+      <div class="dash-card"><div class="icon">📋</div><div class="label">Total Appointments</div><div class="value" id="statAppt">—</div><div class="desc">All bookings</div></div>
+      <div class="dash-card"><div class="icon">⏳</div><div class="label">Pending</div><div class="value" id="statPending">—</div><div class="desc">Awaiting confirmation</div></div>
+      <div class="dash-card"><div class="icon">✅</div><div class="label">Completed</div><div class="value" id="statCompleted">—</div><div class="desc">Finished sessions</div></div>
+      <div class="dash-card"><div class="icon">💳</div><div class="label">Total Revenue</div><div class="value" id="statRev">—</div><div class="desc">Completed payments</div></div>
+      <div class="dash-card"><div class="icon">👤</div><div class="label">Therapists</div><div class="value" id="statTherapist">—</div><div class="desc">Active staff</div></div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="section-label">Quick Actions</div>
+    <div class="quick-links">
+      <a class="quick-link" href="pages/appointments.html">
+        <div class="ql-icon">📋</div>
+        <div class="ql-text"><strong>Book Appointment</strong><span>Transaction 1 — Client bookings</span></div>
+      </a>
+      <a class="quick-link" href="pages/assignments.html">
+        <div class="ql-icon">🔗</div>
+        <div class="ql-text"><strong>Assign Therapist</strong><span>Transaction 2 — Staff assignment</span></div>
+      </a>
+      <a class="quick-link" href="pages/payments.html">
+        <div class="ql-icon">💳</div>
+        <div class="ql-text"><strong>Process Payment</strong><span>Transaction 3 — Billing</span></div>
+      </a>
+      <a class="quick-link" href="pages/reports.html">
+        <div class="ql-icon">📊</div>
+        <div class="ql-text"><strong>Generate Reports</strong><span>Export to Excel with charts</span></div>
+      </a>
+      <a class="quick-link" href="usermgmt.html">
+        <div class="ql-icon">👥</div>
+        <div class="ql-text"><strong>User Management</strong><span>Manage system accounts</span></div>
+      </a>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    async function onPageLoad() {
+      try {
+        const ra = await fetch('/api/appointments/list');
+        const da = await ra.json();
+        const appts = da.success ? da.data.appointments : [];
+        document.getElementById('statAppt').textContent      = appts.length;
+        document.getElementById('statPending').textContent   = appts.filter(a => a.status === 'pending').length;
+        document.getElementById('statCompleted').textContent = appts.filter(a => a.status === 'completed').length;
+
+        const rp = await fetch('/api/payments/list');
+        const dp = await rp.json();
+        const pays = dp.success ? dp.data.payments : [];
+        const rev  = pays.filter(p => p.status === 'completed').reduce((s, p) => s + parseFloat(p.amount), 0);
+        document.getElementById('statRev').textContent = '₱' + rev.toLocaleString('en-PH', { minimumFractionDigits: 0 });
+
+        const rt = await fetch('/api/assignments/therapists');
+        const dt = await rt.json();
+        document.getElementById('statTherapist').textContent = dt.success ? dt.data.therapists.length : '—';
+      } catch (_) {}
+    }
+  </script>
+</body>
+</html>

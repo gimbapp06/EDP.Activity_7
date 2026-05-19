@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>THBMS — User Management</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/transactions.css"/>
+  <style>
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+    @media (max-width:500px) { .form-row { grid-template-columns: 1fr; } }
+    .modal-footer { display: flex; gap: .6rem; justify-content: flex-end; margin-top: 1.2rem; }
+    .actions-cell { display: flex; gap: .4rem; }
+  </style>
+</head>
+<body>
+  <nav class="topbar">
+    <div class="topbar-brand">Tranquility<span>Haven</span></div>
+    <div class="topbar-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="pages/appointments.html">Appointments</a>
+      <a href="pages/assignments.html">Assignments</a>
+      <a href="pages/payments.html">Payments</a>
+      <a href="pages/reports.html">Reports</a>
+      <a href="usermgmt.html" class="active">Users</a>
+    </div>
+    <div class="topbar-user">
+      <span>Welcome, <strong id="topbarName">—</strong></span>
+      <button class="btn btn-outline btn-sm logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+    <div class="section-header">
+      <div><h1>User Management</h1><p class="section-desc">Add, edit, activate or deactivate system accounts.</p></div>
+      <button class="btn btn-primary" onclick="openAddModal()">+ Add Account</button>
+    </div>
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="Search by name, email, or username…" oninput="loadUsers()"/>
+      <button class="btn btn-outline" onclick="loadUsers()">Search</button>
+    </div>
+    <div class="alert alert-error" id="pageAlert"></div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Full Name</th><th>Username</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="userTable"><tr><td colspan="7" class="no-data">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT MODAL -->
+  <div class="modal-overlay" id="userModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add Account</h2>
+        <button class="modal-close" onclick="closeModal('userModal')">✕</button>
+      </div>
+      <div class="alert alert-error" id="modalAlert"></div>
+      <input type="hidden" id="editId"/>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name</label><input type="text" id="mFullName" placeholder="Juan dela Cruz"/></div>
+        <div class="form-group"><label>Username</label><input type="text" id="mUsername" placeholder="juandc"/></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="mEmail" placeholder="juan@thbms.com"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>Role</label>
+          <select id="mRole"><option value="staff">Staff</option><option value="admin">Admin</option></select>
+        </div>
+        <div class="form-group">
+          <label id="passLabel">Password</label>
+          <input type="password" id="mPassword" placeholder="Min. 6 characters"/>
+        </div>
+      </div>
+      <p id="passHint" style="font-size:.78rem;color:var(--gray-mid);margin-top:-.5rem;margin-bottom:.8rem;display:none;">Leave blank to keep current password.</p>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('userModal')">Cancel</button>
+        <button class="btn btn-primary" id="saveBtn" onclick="saveUser()">
+          <span class="spinner" id="saveSpin"></span><span id="saveBtnText">Save Account</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="js/common.js"></script>
+  <script src="js/users.js"></script>
+</body>
+</html>

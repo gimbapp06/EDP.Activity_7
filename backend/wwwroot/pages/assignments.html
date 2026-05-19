@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>THBMS — Therapist Assignments</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <link rel="stylesheet" href="../css/transactions.css"/>
+</head>
+<body>
+  <nav class="topbar">
+    <div class="topbar-brand">Tranquility<span>Haven</span></div>
+    <div class="topbar-nav">
+      <a href="../index.html">Dashboard</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="assignments.html" class="active">Assignments</a>
+      <a href="payments.html">Payments</a>
+      <a href="reports.html">Reports</a>
+    </div>
+    <div class="topbar-user"><span>Welcome, <strong id="topbarName">—</strong></span>
+      <button class="btn btn-outline btn-sm logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+  <div class="page-wrap">
+    <div class="section-header">
+      <div><h1>Therapist Assignment</h1><p class="section-desc">Transaction 2 — Assign therapists to confirmed appointments.</p></div>
+      <button class="btn btn-primary" onclick="openAssignModal()">+ New Assignment</button>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>#</th><th>Client</th><th>Service</th><th>Date</th><th>Time</th>
+            <th>Therapist</th><th>Specialty</th><th>Assigned By</th><th>Actions</th>
+          </tr></thead>
+          <tbody id="dataTable"><tr><td colspan="9" class="no-data">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASSIGN MODAL -->
+  <div class="modal-overlay" id="assignModal">
+    <div class="modal">
+      <div class="modal-header"><h2>Assign Therapist</h2><button class="modal-close" onclick="closeModal('assignModal')">✕</button></div>
+      <div class="alert alert-error" id="assignAlert"></div>
+      <div class="form-group"><label>Appointment *</label>
+        <select id="aAppt"><option value="">— Select Appointment —</option></select>
+      </div>
+      <div class="form-group"><label>Therapist *</label>
+        <select id="aTherapist"><option value="">— Select Therapist —</option></select>
+      </div>
+      <div class="form-group"><label>Notes</label><input type="text" id="aNotes" placeholder="Optional notes"/></div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('assignModal')">Cancel</button>
+        <button class="btn btn-primary" id="assignBtn" onclick="doAssign()">
+          <span class="spinner" id="assignSpin"></span><span id="assignBtnTxt">Assign</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REASSIGN MODAL -->
+  <div class="modal-overlay" id="reassignModal">
+    <div class="modal">
+      <div class="modal-header"><h2>Reassign Therapist</h2><button class="modal-close" onclick="closeModal('reassignModal')">✕</button></div>
+      <div class="alert alert-error" id="reassignAlert"></div>
+      <input type="hidden" id="rAssignId"/>
+      <div class="form-group"><label>New Therapist *</label>
+        <select id="rTherapist"><option value="">— Select Therapist —</option></select>
+      </div>
+      <div class="form-group"><label>Notes</label><input type="text" id="rNotes" placeholder="Optional notes"/></div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('reassignModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="doReassign()">Update Assignment</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="../js/common.js"></script>
+  <script src="../js/pages/assignments.js"></script>
+</body>
+</html>

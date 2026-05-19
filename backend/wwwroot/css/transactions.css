@@ -1,0 +1,126 @@
+/* transactions.css — Shared styles for transaction pages */
+
+/* ── Topbar nav links ── */
+.topbar-nav { display: flex; gap: .2rem; }
+.topbar-nav a {
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+  padding: .35rem .8rem;
+  border-radius: var(--radius);
+  font-size: .85rem;
+  font-weight: 500;
+  transition: all .2s;
+}
+.topbar-nav a:hover,
+.topbar-nav a.active {
+  background: rgba(255,255,255,.15);
+  color: #fff;
+}
+.logout-btn { color: rgba(255,255,255,.8) !important; border-color: rgba(255,255,255,.3) !important; }
+
+/* ── Filter bar ── */
+.filter-bar {
+  display: flex; gap: .6rem; margin-bottom: 1.2rem; flex-wrap: wrap; align-items: center;
+}
+.filter-bar input, .filter-bar select {
+  padding: .55rem .9rem;
+  border: 1.5px solid var(--gray-light);
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .9rem; outline: none;
+  background: var(--white);
+  transition: border-color .2s;
+}
+.filter-bar input:focus, .filter-bar select:focus { border-color: var(--green-accent); }
+.filter-bar input { flex: 1; min-width: 200px; }
+
+/* ── Modal footer ── */
+.modal-footer { display: flex; gap: .6rem; justify-content: flex-end; margin-top: 1.2rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+@media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+
+/* ── No data ── */
+.no-data { text-align: center; color: var(--gray-mid); padding: 2.5rem; font-size: .9rem; }
+
+/* ── Status badge colors ── */
+.badge-pending   { background: #fff3e0; color: #b7700a; }
+.badge-confirmed { background: #e3f2fd; color: #1565c0; }
+.badge-completed { background: var(--green-pale); color: var(--green-dark); }
+.badge-cancelled { background: #fdecea; color: var(--red); }
+.badge-refunded  { background: #f3e5f5; color: #6a1b9a; }
+.badge-failed    { background: #fdecea; color: var(--red); }
+.badge-cash        { background: #e8f5e9; color: #2e7d32; }
+.badge-gcash       { background: #e3f2fd; color: #0d47a1; }
+.badge-credit_card { background: #fce4ec; color: #880e4f; }
+.badge-paymaya     { background: #ede7f6; color: #4527a0; }
+
+/* ── Toast ── */
+#toast {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+  background: var(--green-dark); color: #fff;
+  padding: .75rem 1.2rem; border-radius: var(--radius);
+  font-size: .88rem; box-shadow: var(--shadow);
+  transform: translateY(20px); opacity: 0;
+  transition: all .3s; pointer-events: none;
+}
+#toast.show { transform: translateY(0); opacity: 1; }
+#toast.error { background: var(--red); }
+
+/* ── Report tabs ── */
+.report-tabs {
+  display: flex; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap;
+}
+.tab-btn {
+  padding: .55rem 1.2rem;
+  border: 1.5px solid var(--gray-light);
+  border-radius: var(--radius);
+  background: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .88rem; font-weight: 500;
+  cursor: pointer; transition: all .2s;
+  color: var(--gray-dark);
+}
+.tab-btn:hover { border-color: var(--green-accent); color: var(--green-dark); }
+.tab-btn.active {
+  background: var(--green-dark); color: #fff;
+  border-color: var(--green-dark);
+}
+
+/* ── Filter card ── */
+.filter-card { padding: 1rem 1.2rem; margin-bottom: 1.2rem; }
+
+/* ── Summary cards ── */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem; margin-bottom: 1.2rem;
+}
+.summary-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--green-accent);
+}
+.summary-card .s-label { font-size: .75rem; color: var(--gray-mid); text-transform: uppercase; letter-spacing: .05em; }
+.summary-card .s-value { font-size: 1.5rem; font-weight: 700; color: var(--green-dark); margin-top: .2rem; }
+.summary-card .s-sub   { font-size: .75rem; color: var(--gray-mid); margin-top: .1rem; }
+
+/* ── Report toolbar ── */
+.report-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .9rem 1.2rem;
+  border-bottom: 1px solid var(--gray-light);
+  background: var(--off-white);
+}
+
+/* ── Report footer ── */
+.report-footer {
+  padding: .75rem 1.2rem;
+  border-top: 1px solid var(--gray-light);
+  font-size: .85rem; color: var(--gray-dark);
+  background: var(--off-white);
+}
+
+/* ── Actions cell ── */
+.actions-cell { display: flex; gap: .35rem; }

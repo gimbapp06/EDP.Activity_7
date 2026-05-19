@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THBMS — Password Recovery</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .recover-wrap {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    .recover-card { width: 100%; max-width: 400px; }
+    .brand {
+      text-align: center; margin-bottom: 2rem;
+    }
+    .brand h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem; color: var(--green-dark);
+    }
+    .brand h1 span { color: var(--green-accent); }
+    .brand p { font-size: .82rem; color: var(--gray-mid); margin-top: .3rem; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--green-dark); margin-bottom: .4rem; }
+    .card-desc { font-size: .84rem; color: var(--gray-mid); margin-bottom: 1.4rem; }
+    .btn-full { width: 100%; justify-content: center; margin-top: .5rem; }
+    .step { display: none; }
+    .step.active { display: block; }
+    .token-box {
+      background: var(--green-pale); border-radius: var(--radius);
+      padding: .9rem 1rem; margin: .8rem 0;
+      font-family: monospace; font-size: .95rem;
+      color: var(--green-dark); word-break: break-all;
+    }
+    .token-note { font-size: .78rem; color: var(--gray-mid); margin-bottom: .8rem; }
+    .back-link { display: block; text-align: center; margin-top: 1rem; font-size: .84rem; }
+    .link { color: var(--green-mid); text-decoration: none; font-weight: 500; }
+    .link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="hero-bg"></div>
+  <div class="recover-wrap">
+    <div>
+      <div class="brand">
+        <h1>Tranquility<span>Haven</span></h1>
+        <p>Password Recovery</p>
+      </div>
+      <div class="card recover-card">
+
+        <!-- Step 1: Request token -->
+        <div class="step active" id="step1">
+          <h2 class="card-title">Forgot Password?</h2>
+          <p class="card-desc">Enter your registered email and we'll generate a recovery token.</p>
+          <div class="alert alert-error"   id="s1Error"></div>
+          <div class="alert alert-success" id="s1Success"></div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="recoverEmail" placeholder="your@email.com" />
+          </div>
+          <button class="btn btn-primary btn-full" id="requestBtn" onclick="requestToken()">
+            <span class="spinner" id="s1Spin"></span>
+            <span id="s1BtnText">Send Recovery Token</span>
+          </button>
+        </div>
+
+        <!-- Step 2: Token display + reset form -->
+        <div class="step" id="step2">
+          <h2 class="card-title">Reset Password</h2>
+          <p class="card-desc">Your recovery token (demo — normally emailed):</p>
+          <div class="token-box" id="tokenDisplay"></div>
+          <p class="token-note">Token is pre-filled below. In production this would be sent via email.</p>
+          <div class="alert alert-error"   id="s2Error"></div>
+          <div class="alert alert-success" id="s2Success"></div>
+          <div class="form-group">
+            <label>Recovery Token</label>
+            <input type="text" id="tokenInput" placeholder="Paste token here" />
+          </div>
+          <div class="form-group">
+            <label>New Password</label>
+            <input type="password" id="newPass" placeholder="Min. 6 characters" />
+          </div>
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPass" placeholder="Repeat password" />
+          </div>
+          <button class="btn btn-primary btn-full" id="resetBtn" onclick="resetPassword()">
+            <span class="spinner" id="s2Spin"></span>
+            <span id="s2BtnText">Reset Password</span>
+          </button>
+        </div>
+
+        <a class="back-link link" href="index.html">← Back to Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/recover.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>THBMS — Reports</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <link rel="stylesheet" href="../css/transactions.css"/>
+</head>
+<body>
+  <nav class="topbar">
+    <div class="topbar-brand">Tranquility<span>Haven</span></div>
+    <div class="topbar-nav">
+      <a href="../index.html">Dashboard</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="assignments.html">Assignments</a>
+      <a href="payments.html">Payments</a>
+      <a href="reports.html" class="active">Reports</a>
+    </div>
+    <div class="topbar-user"><span>Welcome, <strong id="topbarName">—</strong></span>
+      <button class="btn btn-outline btn-sm logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+  <div class="page-wrap">
+    <div class="section-header">
+      <div><h1>Report Generation</h1><p class="section-desc">View records in the data grid and export to Excel with charts.</p></div>
+    </div>
+
+    <!-- Report Tabs -->
+    <div class="report-tabs">
+      <button class="tab-btn active" onclick="switchReport('appointments', this)">📋 Appointments</button>
+      <button class="tab-btn"        onclick="switchReport('payments',     this)">💳 Payments</button>
+      <button class="tab-btn"        onclick="switchReport('therapists',   this)">👤 Therapist Performance</button>
+    </div>
+
+    <!-- Date Filter (hidden for therapists) -->
+    <div class="card filter-card" id="dateFilterCard">
+      <div class="filter-bar" style="align-items:flex-end;gap:1rem;flex-wrap:wrap">
+        <div class="form-group" style="margin:0;min-width:150px">
+          <label>Date From</label>
+          <input type="date" id="filterFrom"/>
+        </div>
+        <div class="form-group" style="margin:0;min-width:150px">
+          <label>Date To</label>
+          <input type="date" id="filterTo"/>
+        </div>
+        <button class="btn btn-outline" onclick="loadReport()">🔍 Filter</button>
+        <button class="btn btn-outline" onclick="clearFilter()">✕ Clear</button>
+      </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-cards" id="summaryCards"></div>
+
+    <!-- DataGrid -->
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="report-toolbar">
+        <span id="reportTitle" style="font-weight:600;color:var(--green-dark)">Appointment Report</span>
+        <button class="btn btn-primary btn-sm" id="exportBtn" onclick="exportExcel()">
+          ⬇ Export to Excel
+        </button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead id="reportHead"></thead>
+          <tbody id="reportBody"><tr><td colspan="9" class="no-data">Select a report tab above.</td></tr></tbody>
+        </table>
+      </div>
+      <div class="report-footer" id="reportFooter"></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="../js/common.js"></script>
+  <script src="../js/pages/reports.js"></script>
+</body>
+</html>
